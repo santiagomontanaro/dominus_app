@@ -1,0 +1,99 @@
+@import 'variables';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+body {
+  background-color: $black;
+  color: $white;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+
+  .mainIntro {
+    .dominusBtn__title {
+      font-size: 3.5rem;
+      color: $gold;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.5 ease;
+      animation:  fadeIn 1s ease-in-out;
+
+      &:hover {
+        text-shadow: 0 0 5px $gold;
+        transform: scale(1.05);
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+
+  .mainApp {
+    opacity: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    transition: opacity .5s ease;
+
+    &.visible {
+      opacity: 1;
+    }
+
+    .mainApp__dailyTitle {
+      font-size: 2rem;
+      color: $gold;
+      font-weight: bold;
+      animation: fadeIn .5s ease;
+      ;
+    }
+
+    .mainApp__dayCount {
+      font-size: 1.8rem;
+      color: $white;
+      animation: fadeIn .5s ease;
+    }
+
+    .mainApp__resetBtn {
+      background-color: $green;
+      color: $white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition:  all .3s ease;
+      margin-top: 1rem;
+      animation: fadeIn .5 ease;
+
+      &:hover {
+        background-color: darken($color: $green, $amount: 10%);
+        transform: scale(1.05);
+      }
+      &:active{
+        transform: scale(0.98);
+      }
+    }
+  }
+}

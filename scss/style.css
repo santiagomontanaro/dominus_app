@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: "Bebas Neue", sans-serif;
+}
+
+body {
+  background-color: #121212;
+  color: #FFFFFF;
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+body .mainIntro .dominusBtn__title {
+  font-size: 3.5rem;
+  color: #FFD700;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5 ease;
+  animation: fadeIn 1s ease-in-out;
+}
+body .mainIntro .dominusBtn__title:hover {
+  text-shadow: 0 0 5px #FFD700;
+  transform: scale(1.05);
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+body .mainApp {
+  opacity: 0;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  transition: opacity 0.5s ease;
+}
+body .mainApp.visible {
+  opacity: 1;
+}
+body .mainApp .mainApp__dailyTitle {
+  font-size: 2rem;
+  color: #FFD700;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease;
+}
+body .mainApp .mainApp__dayCount {
+  font-size: 1.8rem;
+  color: #FFFFFF;
+  animation: fadeIn 0.5s ease;
+}
+body .mainApp .mainApp__resetBtn {
+  background-color: #28a745;
+  color: #FFFFFF;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  animation: fadeIn 0.5 ease;
+}
+body .mainApp .mainApp__resetBtn:hover {
+  background-color: #1e7e34;
+  transform: scale(1.05);
+}
+body .mainApp .mainApp__resetBtn:active {
+  transform: scale(0.98);
+}/*# sourceMappingURL=style.css.map */
