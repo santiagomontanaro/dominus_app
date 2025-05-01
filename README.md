@@ -36,7 +36,7 @@ Esta app es mi forma de transformar ese impulso en motivación. Cada título gan
 
 ## 📌 Próximas ideas
 
-- Guardar progreso en localStorage.
+- Guardar progreso en localStorage. ✅
 - Animaciones semanales para recompensas más intensas.
 - Generador dinámico de títulos con IA (para no repetir).
 - Versión futura en Next.js para más escalabilidad.
