@@ -19,19 +19,22 @@ let day = 1
 let intervalId = null
 
 function loadProgress() {
-  const storedDay = localStorage.getItem('day')
-  const storedTitle = localStorage.getItem('dailyTitle')
+  const storedStartDate = localStorage.getItem('startDate');
 
-  if (storedDay && storedTitle) {
-    day = parseInt(storedDay)
-    dailyTitle.textContent = storedTitle
-    dayCount.textContent = `Día ${day}`
-    app.classList.remove('hidden')
-    app.style.display = 'flex'
-    title.classList.add('hidden')
-    title.style.display = 'none'
+  if (storedStartDate) {
+    const now = Date.now();
+    const elapsedMs = now - parseInt(storedStartDate);
+    const elapsedDays = Math.floor(elapsedMs / 86400000); // 1 día en ms
 
-    startCounting()
+    day = Math.min(1 + elapsedDays, titles.length);
+    dayCount.textContent = `Día ${day}`;
+    dailyTitle.textContent = titles[day - 1] || "Título no disponible";
+    app.classList.remove('hidden');
+    app.classList.add('visible');
+    app.style.display = 'flex';
+    title.classList.add('hidden');
+    title.style.display = 'none';
+
   }
 }
 
@@ -50,9 +53,9 @@ function startCounting() {
     if (day <= titles.length) {
       const titleToday = titles[day - 1];
       dailyTitle.textContent = titleToday;
-      guardarProgreso(); 
+      saveProgress();
     }
-  }, 8000); 
+  }, 86400000);
 }
 
 app.classList.add('hidden')
@@ -60,6 +63,9 @@ app.style.display = 'none'
 
 title.addEventListener('click', () => {
   title.style.opacity = 0
+  if (!localStorage.getItem('startDate')) {
+    localStorage.setItem('startDate', Date.now());
+  }
 
   setTimeout(() => {
     title.classList.add('hidden')
@@ -88,6 +94,8 @@ resetButton.addEventListener('click', () => {
   app.style.display = 'none'
   title.classList.remove('hidden')
   title.style.opacity = 1
+  localStorage.removeItem('startDate');
+
 })
 
 document.addEventListener('DOMContentLoaded', loadProgress)
