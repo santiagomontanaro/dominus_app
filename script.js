@@ -2,100 +2,110 @@ const title = document.querySelector('.mainIntro');
 const app = document.querySelector('.mainApp');
 const resetButton = document.querySelector('.mainApp__resetBtn');
 const dailyTitle = document.querySelector('.mainApp__dailyTitle');
-/* const titleToday = titles[day - 1] */
 const dayCount = document.querySelector('.mainApp__dayCount');
+const timer = document.querySelector('.mainApp__timer'); // Asegúrate de tener este contenedor en tu HTML
 
 const titles = [
-  "Novato", // Día 1
-  "Despertar", // Día 2
-  "Fuerza interior", // Día 3
-  "Resistencia", // Día 4
-  "Determinación", // Día 5
-  "Convicción", // Día 6
-  "Hombre Pro", // Día 7
-]
+  "Novato", 
+  "Despertar", 
+  "Fuerza interior", 
+  "Resistencia", 
+  "Determinación",
+  "Convicción", 
+  "Guerrero de la Voluntad Inquebrantable", 
+];
 
-let day = 1
-let intervalId = null
+let intervalId = null;
 
 function loadProgress() {
   const storedStartDate = localStorage.getItem('startDate');
-
   if (storedStartDate) {
     const now = Date.now();
     const elapsedMs = now - parseInt(storedStartDate);
-    const elapsedDays = Math.floor(elapsedMs / 86400000); // 1 día en ms
+    const elapsedDays = Math.floor(elapsedMs / 86400000); 
 
-    day = Math.min(1 + elapsedDays, titles.length);
+    const day = Math.min(1 + elapsedDays, titles.length);
     dayCount.textContent = `Día ${day}`;
     dailyTitle.textContent = titles[day - 1] || "Título no disponible";
+
     app.classList.remove('hidden');
     app.classList.add('visible');
     app.style.display = 'flex';
     title.classList.add('hidden');
     title.style.display = 'none';
-
   }
-}
-
-function saveProgress() {
-  localStorage.setItem('day', day)
-  localStorage.setItem('dailyTitle', dailyTitle.textContent)
 }
 
 function startCounting() {
   if (intervalId) clearInterval(intervalId);
 
   intervalId = setInterval(() => {
-    day++;
-    dayCount.textContent = `Día ${day}`;
-
-    if (day <= titles.length) {
-      const titleToday = titles[day - 1];
-      dailyTitle.textContent = titleToday;
-      saveProgress();
-    }
-  }, 86400000);
+    updateTimePassed();
+  }, 1000);
 }
 
-app.classList.add('hidden')
-app.style.display = 'none'
+function updateTimePassed() {
+  const storedStartDate = localStorage.getItem('startDate');
+  if (!storedStartDate) return;
+
+  const now = Date.now();
+  const elapsedMs = now - parseInt(storedStartDate);
+
+  const days    = Math.floor(elapsedMs / (1000 * 60 * 60 * 24)); 
+  const hours   = Math.floor((elapsedMs / (1000 * 60 * 60)) % 24); 
+  const minutes = Math.floor((elapsedMs / (1000 * 60)) % 60);
+  const seconds = Math.floor((elapsedMs / 1000) % 60);
+
+  timer.textContent = `Tiempo: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+  const percent = ((hours * 3600 + minutes * 60 + seconds) / 86400) * 100;
+
+  const circle = document.querySelector('.mainApp__progressCircle');
+  if (circle) {
+    circle.style.setProperty('--progress', `${percent}%`);
+  }
+}
+
+app.classList.add('hidden');
+app.style.display = 'none';
 
 title.addEventListener('click', () => {
-  title.style.opacity = 0
+  title.style.opacity = 0;
+
   if (!localStorage.getItem('startDate')) {
     localStorage.setItem('startDate', Date.now());
   }
 
   setTimeout(() => {
-    title.classList.add('hidden')
-    app.classList.remove('hidden')
-    app.classList.add('visible')
-    title.style.display = 'none'
-    app.style.display = 'flex'
+    title.classList.add('hidden');
+    app.classList.remove('hidden');
+    app.classList.add('visible');
+    title.style.display = 'none';
+    app.style.display = 'flex';
 
-    startCounting()
-  }, 500)
-
-})
+    startCounting();
+  }, 500);
+});
 
 resetButton.addEventListener('click', () => {
-  day = 1
-  dayCount.textContent = `Día ${day}`
-  dailyTitle.textContent = 'Novato'
+  day = 1;
+  dayCount.textContent = `Día ${day}`;
+  dailyTitle.textContent = titles[0];
 
   if (intervalId) clearInterval(intervalId);
+  localStorage.removeItem('startDate'); 
 
-  localStorage.removeItem('day')
-  localStorage.removeItem('dailyTitle')
+  title.style.display = 'block';
+  title.classList.remove('hidden');
+  title.style.opacity = 1;
+  app.classList.remove('visible');
+  app.style.display = 'none';
 
-  title.style.display = 'block'
-  app.classList.remove('visible')
-  app.style.display = 'none'
-  title.classList.remove('hidden')
-  title.style.opacity = 1
-  localStorage.removeItem('startDate');
 
-})
+  startCounting(); 
+});
 
-document.addEventListener('DOMContentLoaded', loadProgress)
+document.addEventListener('DOMContentLoaded', () => {
+  loadProgress();
+  startCounting();
+});

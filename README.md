@@ -43,9 +43,4 @@ Esta app es mi forma de transformar ese impulso en motivación. Cada título gan
 
 ---
 
-> *"Primero te dominás. Después dominás el mundo."*
-
----
-
-## ✍️ Creado por mí  
-Un tipo común que decidió dejar de serlo.
+## ✍️ Creado por mí. Un tipo común que decidió dejar de serlo.
